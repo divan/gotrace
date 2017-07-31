@@ -37,7 +37,7 @@ func GuessParams(c Commands) *Params {
 	}
 
 	if gs, ok := goroutines[2]; ok {
-		params.AngleSecond = 360.0 / float64(gs/goroutines[1])
+		params.AngleSecond = 360.0 * float64(goroutines[1]) / float64(gs)
 		params.DistanceSecond = 20
 	}
 
