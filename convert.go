@@ -77,7 +77,7 @@ func ConvertEvents(events []*trace.Event) (Commands, error) {
 				fmt.Printf("[DD] %d, Recv->Send: FromG:%d, ToG: %d, CH: %d, EvID: %d, Val:%d\n", send.Ts, send.G, ev.G, ev.Args[1], ev.Args[0], ev.Args[2])
 			}
 			c.ChanSend(send.Ts, ev.Ts, ev.Args[1], send.G, ev.G, send.Args[2])
-		case trace.EvGCStart, trace.EvGCDone, trace.EvGCScanStart, trace.EvGCScanDone:
+		case trace.EvGCStart, trace.EvGCDone, trace.EvGCSweepStart, trace.EvGCSweepDone:
 			if debug {
 				fmt.Println(ev.Ts, "GoGC...", ev.Type, ev.Args)
 			}

@@ -28,7 +28,7 @@ func main() {
 
 		src = NewNativeRun(args[0])
 	} else if len(args) == 2 {
-		src = NewTraceSource(args[0], args[1])
+		src = NewTraceSource(args[0])
 	} else {
 		Usage()
 		os.Exit(1)
@@ -66,6 +66,6 @@ func ProcessCommands(out string, cmds Commands) {
 
 // Usage prints usage information, overriding default one.
 func Usage() {
-	fmt.Fprintf(os.Stderr, "Usage: %s [-o file] [trace.out trace.bin] or [trace.json] or [main.go]\n", os.Args[0])
+	fmt.Fprintf(os.Stderr, "Usage: %s [-o file] [trace.out] or [trace.json] or [main.go]\n", os.Args[0])
 	flag.PrintDefaults()
 }

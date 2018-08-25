@@ -5,11 +5,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/divan/gotrace/trace"
-	"io"
 	"io/ioutil"
 	"os"
 	"os/exec"
+
+	"github.com/divan/gotrace/trace"
 )
 
 // EventSource defines anything that can
@@ -23,18 +23,12 @@ type EventSource interface {
 type TraceSource struct {
 	// Trace is the path to the trace file.
 	Trace string
-
-	// Binary is a path to binary, needed to symbolize stacks.
-	// In the future it may be dropped, see
-	// https://groups.google.com/d/topic/golang-dev/PGX1H8IbhFU
-	Binary string
 }
 
 // NewTraceSource inits new TraceSource.
-func NewTraceSource(trace, binary string) *TraceSource {
+func NewTraceSource(trace string) *TraceSource {
 	return &TraceSource{
-		Trace:  trace,
-		Binary: binary,
+		Trace: trace,
 	}
 }
 
@@ -47,18 +41,12 @@ func (t *TraceSource) Events() ([]*trace.Event, error) {
 	}
 	defer f.Close()
 
-	return parseTrace(f, t.Binary)
-}
-
-func parseTrace(r io.Reader, binary string) ([]*trace.Event, error) {
-	events, err := trace.Parse(r)
+	res, err := trace.Parse(f, "")
 	if err != nil {
 		return nil, err
 	}
+	return res.Events, nil
 
-	err = trace.Symbolize(events, binary)
-
-	return events, err
 }
 
 // NativeRun implements EventSource for running app locally,
@@ -126,7 +114,12 @@ func (r *NativeRun) Events() ([]*trace.Event, error) {
 	}
 
 	// parse trace
-	return parseTrace(&stderr, tmpBinary.Name())
+	res, err := trace.Parse(&stderr, "")
+	if err != nil {
+		return nil, err
+	}
+
+	return res.Events, nil
 }
 
 // RewriteSource attempts to add trace-related code if needed.
