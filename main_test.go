@@ -13,7 +13,7 @@ func TestExamples(t *testing.T) {
 		stopCount   int
 		sendCount   int
 	}{
-		{"hello01.go", 5, 2, 2, 1},
+		{"hello.go", 5, 2, 2, 1},
 		{"pingpong01.go", 16, 3, 1, 12},
 		{"pingpong02.go", 18, 4, 1, 13},
 		{"pingpong03.go", 212, 101, 1, 110},
