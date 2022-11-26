@@ -1,5 +1,7 @@
 # GoTrace - Go Concurrency 3D Tracer
 
+[![go-recipes](https://raw.githubusercontent.com/nikolaydubina/go-recipes/main/badge.svg?raw=true)](https://github.com/nikolaydubina/go-recipes)
+
 GoTrace is a 3D WebGL visualizer of Go concurrency. It analyzes trace produced by `go tool trace` and renders visualization of concurrency flow.
 
 Original article: [https://divan.github.io/posts/go_concurrency_visualize/](https://divan.github.io/posts/go_concurrency_visualize/)
